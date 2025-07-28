@@ -2,10 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>手寫簽名</title>
   <style>
     canvas { border: 1px solid #aaa; touch-action: none; }
     #bg { display: none; }
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .signature-box {
+      width: 80%;
+      border: 2px solid red;
+      margin-top: 20px;
+      aspect-ratio: 4 / 1;
+    }
   </style>
 </head>
 <body>
