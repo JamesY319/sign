@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>手寫簽名</title>
+  <style>
+    canvas { border: 1px solid #aaa; touch-action: none; }
+    #bg { display: none; }
+  </style>
+</head>
+<body>
+  <h2>請在下方簽名</h2>
+  <canvas id="sigCanvas" width="400" height="150"></canvas><br>
+  <button onclick="clearSig()">清除</button>
+  <button onclick="combine()">完成簽名</button>
+
+  <h3>預覽結果：</h3>
+  <canvas id="finalCanvas" width="600" height="850"></canvas><br>
+
+  <img id="bg" src="statement.jpg"> <!-- 你要放的背景圖 -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+  <script>
+    const sigCanvas = document.getElementById("sigCanvas");
+    const signaturePad = new SignaturePad(sigCanvas);
+    const finalCanvas = document.getElementById("finalCanvas");
+    const finalCtx = finalCanvas.getContext("2d");
+    const bgImg = document.getElementById("bg");
+
+    function clearSig() {
+      signaturePad.clear();
+    }
+
+    function combine() {
+      const signatureImage = signaturePad.toDataURL();
+      bgImg.onload = () => {
+        finalCtx.drawImage(bgImg, 0, 0, finalCanvas.width, finalCanvas.height);
+        const img = new Image();
+        img.onload = () => {
+          // 調整位置與大小（這是放在右下角的例子）
+          finalCtx.drawImage(img, 180, 660, 150, 50);
+        };
+        img.src = signatureImage;
+      };
+      bgImg.src = "statement.jpg";
+    }
+  </script>
+</body>
+</html>
