@@ -1,90 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
 <head>
+  <link rel="stylesheet" href="style/common.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電子簽名首頁</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 2em;
-      margin: 0;
-      background-color: #f9f9f9;
-    }
-
-    .button {
-      display: block;
-      width: 90%;
-      max-width: 400px;
-      margin: 1.2em auto;
-      padding: 1.2em;
-      font-size: 1.2em;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增加可視效果 */
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-    background-color: #45a049;
-    }
-
-    @media (max-width: 600px) {
-    .button {
-      font-size: 1.4em;
-      padding: 1.5em;
-      border-radius: 16px;
-    }
-    }
-
-    @media (min-width: 600px) {
-    .button {
-      font-size: 1.6em;
-    }
-    }
-  </style>
+  <title>電子簽名</title>
 </head>
-<body>
-  <!-- 語言選擇器 -->
-  <select id="langSelector">
-    <option value="zh">中文</option>
-    <option value="en">English</option>
-  </select>
+<body> 
+  <div class="container">
+    <h1 id="title"></h1>
 
-  <h1 id="title">請選擇功能</h1>
-  <button id="button1" class="button" onclick="location.href='signature-only.html'">1. 簽名並下載透明圖</button>
-  <button id="button2" class="button" onclick="location.href='upload-and-sign.html'">2. 上傳圖片並加入簽名</button>
+    <!-- 語言選擇器 -->
+    <select id="langSelector">
+      <option value="zh">中文</option>
+      <option value="en">English</option>
+    </select>
 
-  <script>
-    const translations = {
-      zh: {
-        title: "請選擇功能",
-        button1: "1. 簽名並下載透明圖",
-        button2: "2. 上傳圖片並加入簽名"
-      },
-      en: {
-        title: "Choose a Function",
-        button1: "1. Create Signature",
-        button2: "2. Upload JPG with Signature"
-      }
-    };
+    <div class="button-group">
+      <button id="button1" class="button" data-route="signature-only.html"></button>
+      <button id="button2" class="button" data-route="upload-and-sign.html"></button>
+    </div>
+  </div>
+<script src="js/common.js"></script>
 
-    function setLanguage(lang) {
-      document.getElementById("title").innerText = translations[lang].title;
-      document.getElementById("button1").innerText = translations[lang].button1;
-      document.getElementById("button2").innerText = translations[lang].button2;
-    }
-
-    document.getElementById("langSelector").addEventListener("change", function () {
-      setLanguage(this.value);
-    });
-
-    // 預設中文
-    setLanguage("zh");
-  </script>
 </body>
-
 </html>
