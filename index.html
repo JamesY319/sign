@@ -1,70 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>手寫簽名</title>
+  <title>電子簽名首頁</title>
   <style>
-    canvas { border: 1px solid #aaa; touch-action: none; }
-    #bg { display: none; }
     body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2em;
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .signature-box {
+    .button {
+      display: block;
       width: 80%;
-      border: 2px solid red;
-      margin-top: 20px;
-      aspect-ratio: 4 / 1;
+      max-width: 300px;
+      margin: 1em auto;
+      padding: 1em;
+      font-size: 1.2em;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .button {
+        font-size: 1.4em;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>請在下方簽名</h2>
-  <canvas id="sigCanvas" width="400" height="150"></canvas><br>
-  <button onclick="clearSig()">清除</button>
-  <button onclick="combine()">完成簽名</button>
+  <!-- 語言選擇器 -->
+  <select id="langSelector">
+    <option value="zh">中文</option>
+    <option value="en">English</option>
+  </select>
 
-  <h3>預覽結果：</h3>
-  <canvas id="finalCanvas" width="600" height="850"></canvas><br>
+  <h1 id="title">請選擇功能</h1>
+  <button id="button1" class="button" onclick="location.href='signature-only.html'">1. 簽名並下載透明圖</button>
+  <button id="button2" class="button" onclick="location.href='upload-and-sign.html'">2. 上傳圖片並加入簽名</button>
 
-  <img id="bg" src="statement.jpg"> <!-- 你要放的背景圖 -->
-  
-  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
   <script>
-    const sigCanvas = document.getElementById("sigCanvas");
-    const signaturePad = new SignaturePad(sigCanvas);
-    const finalCanvas = document.getElementById("finalCanvas");
-    const finalCtx = finalCanvas.getContext("2d");
-    const bgImg = document.getElementById("bg");
+    const translations = {
+      zh: {
+        title: "請選擇功能",
+        button1: "1. 簽名並下載透明圖",
+        button2: "2. 上傳圖片並加入簽名"
+      },
+      en: {
+        title: "Choose a Function",
+        button1: "1. Create Signature",
+        button2: "2. Upload JPG with Signature"
+      }
+    };
 
-    function clearSig() {
-      signaturePad.clear();
+    function setLanguage(lang) {
+      document.getElementById("title").innerText = translations[lang].title;
+      document.getElementById("button1").innerText = translations[lang].button1;
+      document.getElementById("button2").innerText = translations[lang].button2;
     }
 
-    function combine() {
-      const signatureImage = signaturePad.toDataURL();
-      bgImg.onload = () => {
-        finalCtx.drawImage(bgImg, 0, 0, finalCanvas.width, finalCanvas.height);
-        const img = new Image();
-        img.onload = () => {
-          // 調整位置與大小（這是放在右下角的例子）
-          finalCtx.drawImage(img, 180, 660, 150, 50);
-        };
-        img.src = signatureImage;
-      };
-      bgImg.src = "statement.jpg";
-    }
+    document.getElementById("langSelector").addEventListener("change", function () {
+      setLanguage(this.value);
+    });
+
+    // 預設中文
+    setLanguage("zh");
   </script>
 </body>
+
 </html>

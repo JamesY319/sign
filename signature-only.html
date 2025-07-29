@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>簽名產生器</title>
+  <style>
+    body {
+      text-align: center;
+      padding: 1em;
+      font-family: sans-serif;
+    }
+
+    canvas {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      touch-action: none;
+    }
+
+    .button {
+      margin: 1em;
+      padding: 1em;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      background-color: #4CAF50;
+    }
+
+    .clear-btn {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>請手寫簽名</h1>
+  <canvas id="signatureCanvas" width="300" height="150"></canvas><br>
+
+  <button class="button clear-btn" onclick="clearCanvas()">清除</button>
+  <button class="button" onclick="downloadSignature()">下載透明圖</button>
+
+  <script>
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    canvas.addEventListener('mousedown', e => {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener('mousemove', e => {
+      if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mouseleave', () => drawing = false);
+
+    // 手機觸控支援
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      ctx.beginPath();
+      ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      drawing = true;
+    });
+
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      ctx.stroke();
+    });
+
+    canvas.addEventListener('touchend', () => drawing = false);
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function downloadSignature() {
+      const link = document.createElement('a');
+      link.download = 'signature.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+
+</body>
+</html>

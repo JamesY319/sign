@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>上傳圖片並簽名 - 第一步</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; text-align: center; }
+    #container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    #signatureCanvas {
+      border: 2px solid red;
+      /* 設定 canvas 實際尺寸與顯示尺寸一致，避免比例跑掉 */
+      width: 300px;
+      height: 300px;
+      touch-action: none;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+    #clearBtn {
+      background-color: #f44336;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>第一步：上傳圖片並簽名</h1>
+
+  <input type="file" id="imageLoader" accept="image/png, image/jpeg" />
+
+  <div id="container">
+    <canvas id="signatureCanvas" width="300" height="150" style="width:300px; height:150px; border:2px solid red;"></canvas>
+  </div>
+
+  <button id="nextBtn" disabled>完成，前往調整簽名位置</button>
+  <button id="clearBtn">清除簽名</button>
+
+<script>
+  const imageLoader = document.getElementById('imageLoader');
+  const canvas = document.getElementById('signatureCanvas');
+  const ctx = canvas.getContext('2d');
+  const nextBtn = document.getElementById('nextBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  let drawing = false;
+
+  // 初始化簽名畫布
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#000';
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // 簽名畫筆事件
+  canvas.addEventListener('mousedown', e => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+  canvas.addEventListener('mousemove', e => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+
+  // 觸控事件
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    ctx.beginPath();
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    drawing = true;
+  });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    ctx.stroke();
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+
+  // 監聽上傳圖片，存入 sessionStorage
+  imageLoader.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      sessionStorage.setItem('uploadedImage', event.target.result);
+      nextBtn.disabled = false;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 清除簽名按鈕事件
+  clearBtn.addEventListener('click', () => {
+    clearCanvas();
+  });
+
+  // 按下一步，存簽名並跳轉調整頁
+  nextBtn.addEventListener('click', () => {
+    sessionStorage.setItem('signatureData', canvas.toDataURL('image/png'));
+    window.location.href = 'adjust-signature.html';
+  });
+</script>
+</body>
+</html>
