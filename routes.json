@@ -1,0 +1,27 @@
+[
+  {
+    "path": "index.html",
+    "title": "首頁",
+    "type": "入口"
+  },
+  {
+    "path": "upload-and-sign.html",
+    "title": "上傳檔案與簽名",
+    "type": "簽名流程"
+  },
+  {
+    "path": "sign.html",
+    "title": "簽名畫面",
+    "type": "簽名流程"
+  },
+  {
+    "path": "confirm.html",
+    "title": "簽名確認",
+    "type": "簽名流程"
+  },
+  {
+    "path": "done.html",
+    "title": "完成畫面",
+    "type": "簽名流程"
+  }
+]

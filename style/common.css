@@ -1,0 +1,72 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.button-group {
+  margin-top: 1%;
+}
+
+select {
+  margin-top: 1%;
+  padding: 1%;
+}
+
+body {
+  background-image: url('../background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 1.2em auto;
+  padding: 1.2em;
+  font-size: 1.2em;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #45a049;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+/* 手機優化 */
+@media (max-width: 600px) {
+  .button {
+    font-size: 1.4em;
+    padding: 1.5em;
+    border-radius: 16px;
+  }
+}
+
+/* 桌機上可以稍微大一點 */
+@media (min-width: 600px) {
+  .button {
+    font-size: 1.6em;
+  }
+}
