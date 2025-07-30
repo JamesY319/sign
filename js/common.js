@@ -25,7 +25,15 @@ const translations = {
 
     "sign-title":"Please Sign",
     "sign-clear-btn":"Clear",
-    "sign-save-btn":"Download"
+    "sign-save-btn":"Download",
+
+    "jpg-title": "Upload Image and Sign",
+    "jpg-upload": "Upload Image",
+    "jpg-next": "Done, Adjust Signature",
+    "jpg-clear": "Clear",
+
+    "jpg-adjust-title": "Position and Size",
+    "jpg-adjust-save": "Download"
 
   }
 };
