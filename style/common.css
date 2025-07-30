@@ -11,7 +11,7 @@ body, html {
   padding: 0;
 }
 
-/* 元素 */
+/* 物件排列 */
 .container {
   display: flex;
   flex-direction: column;
@@ -54,18 +54,13 @@ select {
 }
 
 /* 畫布 */
-.signature-pad {
+.canvas {
   border: 3px dashed rgba(168, 48, 1, 0.897);
   background-color: transparent;
-  width: 90%;
-  max-width: 600px;
-  height: 150px;
   margin: 0 auto;
   display: block;
   touch-action: none; 
 }
-
-
 
 /* 手機優化 */
 @media (max-width: 600px) {

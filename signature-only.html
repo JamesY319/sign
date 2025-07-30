@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>簽名產生器</title>
   <link rel="stylesheet" href="style/common.css">
-  <style>
-
-    canvas {
-      border: 3px dashed rgba(168, 48, 1, 0.897);
-      border-radius: 10px;
-      touch-action: none;
-    }
-
-  </style>
 </head>
 
 <body>
@@ -21,7 +12,7 @@
   
     <h1 id="sign-title"></h1>
   
-    <canvas id="signatureCanvas" width="450" height="180"></canvas><br>
+    <canvas id="signatureCanvas" class="canvas" width="600" height="180"></canvas><br>
 
     <button id="sign-clear-btn" class="button" data-color="#d82424" onclick="clearCanvas()">清除</button>
     <button id="sign-save-btn"  class="button" onclick="downloadSignature()">下載</button>

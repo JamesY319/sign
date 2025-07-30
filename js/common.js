@@ -123,6 +123,7 @@ function initSignaturePad(canvasId = "signature-pad") {
 
   return ctx;
 }
+
 //清除
 function clearSignatureCanvas(canvasId = "signature-pad") {
   const canvas = document.getElementById(canvasId);
