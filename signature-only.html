@@ -1,49 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh">
 <head>
-  <link rel="stylesheet" href="style/common.css">
-  <script src="lang.js" defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>簽名產生器</title>
+  <link rel="stylesheet" href="style/common.css">
   <style>
-    body {
-      text-align: center;
-      padding: 1em;
-      font-family: sans-serif;
-    }
 
     canvas {
-      border: 2px solid #ccc;
+      border: 3px dashed rgba(168, 48, 1, 0.897);
       border-radius: 10px;
       touch-action: none;
     }
 
-    .button {
-      margin: 1em;
-      padding: 1em;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      background-color: #4CAF50;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease;
-    }
-
-    .clear-btn {
-      background-color: #f44336;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
   </style>
 </head>
+
 <body>
+  <div class="container">
+  
+    <h1 id="sign-title"></h1>
 
-  <h1>請手寫簽名</h1>
-  <canvas id="signatureCanvas" width="300" height="150"></canvas><br>
+    <!-- 語言選擇器 -->
+    <select id="preferredLanguage">
+      <option value="zh">中文</option>
+      <option value="en">English</option>
+    </select>
+  
+    <canvas id="signatureCanvas" width="300" height="150"></canvas><br>
 
-  <button class="button clear-btn" onclick="clearCanvas()">清除</button>
-  <button class="button" onclick="downloadSignature()">下載透明圖</button>
+    <button id="sign-clear-btn" class="button" data-color="#d82424" onclick="clearCanvas()">清除</button>
+    <button id="sign-save-btn"  class="button" onclick="downloadSignature()">下載</button>
+  
+  </div>
 
   <script>
     const canvas = document.getElementById('signatureCanvas');
@@ -66,7 +55,6 @@
     canvas.addEventListener('mouseup', () => drawing = false);
     canvas.addEventListener('mouseleave', () => drawing = false);
 
-    // 手機觸控支援
     canvas.addEventListener('touchstart', e => {
       e.preventDefault();
       const rect = canvas.getBoundingClientRect();
@@ -97,7 +85,11 @@
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
+
   </script>
 
+  <script src="js/common.js"></script>
+
 </body>
+
 </html>

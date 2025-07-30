@@ -1,28 +1,5 @@
+/* 背景 */
 body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-}
-
-.button-group {
-  margin-top: 1%;
-}
-
-select {
-  margin-top: 1%;
-  padding: 1%;
-}
-
-body {
   background-image: url('../background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -34,26 +11,61 @@ body {
   padding: 0;
 }
 
+/* 元素 */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1%;             
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* 下拉表 */
+select {
+  margin-top: 1%;
+  padding: 1%;
+}
+
+/* 按鈕外觀 */
 .button {
+  --btn-color: #4CAF50; /* 預設綠色 */
   display: block;
   width: 100%;
   max-width: 400px;
   margin: 1.2em auto;
   padding: 1.2em;
   font-size: 1.2em;
-  background-color: #4CAF50;
+  background-color: var(--btn-color);
   color: white;
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
-
+/* 按鍵特效 */
 .button:hover {
-  background-color: #45a049;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  background-color: var(--btn-color);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.8);
   transform: scale(1.02);
 }
+
+/* 畫布 */
+.signature-pad {
+  border: 3px dashed rgba(168, 48, 1, 0.897);
+  background-color: transparent;
+  width: 90%;
+  max-width: 600px;
+  height: 150px;
+  margin: 0 auto;
+  display: block;
+  touch-action: none; 
+}
+
+
 
 /* 手機優化 */
 @media (max-width: 600px) {
