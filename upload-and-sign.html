@@ -21,7 +21,7 @@
 
     <input type="file" id="jpg-upload" accept="image/png, image/jpeg" />
 
-    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+    <canvas id="signatureCanvas" width="450" height="180"></canvas>
     
     <button id="jpg-clear"class="button" data-color="#d82424"></button>
     <button id="jpg-next" class="button" disabled></button>
@@ -42,15 +42,12 @@
     ctx.lineCap = 'round';
     ctx.strokeStyle = '#000';
 
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
     canvas.addEventListener('mousedown', e => {
       drawing = true;
       ctx.beginPath();
       ctx.moveTo(e.offsetX, e.offsetY);
     });
+
     canvas.addEventListener('mousemove', e => {
       if (drawing) {
         ctx.lineTo(e.offsetX, e.offsetY);
@@ -79,7 +76,8 @@
       ctx.stroke();
     });
     canvas.addEventListener('touchend', () => drawing = false);
-
+    
+    //上傳圖片
     imageLoader.addEventListener('change', e => {
       const file = e.target.files[0];
       if (!file) return;
@@ -91,10 +89,15 @@
       reader.readAsDataURL(file);
     });
 
+    //清除
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
     clear.addEventListener('click', () => {
       clearCanvas();
     });
 
+    //下一頁
     next.addEventListener('click', () => {
       sessionStorage.setItem('signatureData', canvas.toDataURL('image/png'));
       window.location.href = 'adjust-signature.html';

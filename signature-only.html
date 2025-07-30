@@ -21,7 +21,7 @@
   
     <h1 id="sign-title"></h1>
   
-    <canvas id="signatureCanvas" width="300" height="150"></canvas><br>
+    <canvas id="signatureCanvas" width="450" height="180"></canvas><br>
 
     <button id="sign-clear-btn" class="button" data-color="#d82424" onclick="clearCanvas()">清除</button>
     <button id="sign-save-btn"  class="button" onclick="downloadSignature()">下載</button>
@@ -32,6 +32,10 @@
     const canvas = document.getElementById('signatureCanvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
 
     canvas.addEventListener('mousedown', e => {
       drawing = true;
@@ -69,10 +73,12 @@
 
     canvas.addEventListener('touchend', () => drawing = false);
 
+    //清除
     function clearCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    //下載
     function downloadSignature() {
       const link = document.createElement('a');
       link.download = 'signature.png';
