@@ -7,6 +7,7 @@ const translations = {
 
     "sign-title":"請簽名",
     "sign-clear-btn":"清除",
+    "sign-undo-btn":"上一步",
     "sign-save-btn":"下載",
 
     "jpg-title":"上傳圖片並簽名",
@@ -25,6 +26,7 @@ const translations = {
 
     "sign-title":"Please Sign",
     "sign-clear-btn":"Clear",
+    "sign-undo-btn":"Undo",
     "sign-save-btn":"Download",
 
     "jpg-title": "Upload Image and Sign",
@@ -77,60 +79,12 @@ buttons.forEach(button => {
 });
 
 //畫布
-function initSignaturePad(canvasId = "signature-pad") {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
 
-  const ctx = canvas.getContext("2d");
-  let drawing = false;
-
-  canvas.addEventListener("mousedown", () => { drawing = true; });
-  canvas.addEventListener("mouseup", () => { drawing = false; ctx.beginPath(); });
-  canvas.addEventListener("mouseleave", () => { drawing = false; ctx.beginPath(); });
-  canvas.addEventListener("mousemove", (e) => draw(e, canvas, ctx, drawing));
-  
-  // 手機支援（觸控事件）
-  canvas.addEventListener("touchstart", () => { drawing = true; });
-  canvas.addEventListener("touchend", () => { drawing = false; ctx.beginPath(); });
-  canvas.addEventListener("touchcancel", () => { drawing = false; ctx.beginPath(); });
-  canvas.addEventListener("touchmove", (e) => drawTouch(e, canvas, ctx, drawing));
-
-  function draw(e, canvas, ctx, drawing) {
-    if (!drawing) return;
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000";
-    const rect = canvas.getBoundingClientRect();
-    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-  }
-
-  function drawTouch(e, canvas, ctx, drawing) {
-    if (!drawing || e.touches.length === 0) return;
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000";
-    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-    e.preventDefault();
-  }
-
-  return ctx;
-}
 
 //清除
-function clearSignatureCanvas(canvasId = "signature-pad") {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+
+
+
 
 /* 按鈕顏色 */
 document.querySelectorAll('.button[data-color]').forEach(button => {
