@@ -1,86 +1,133 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>簽名產生器</title>
-  <link rel="stylesheet" href="style/common.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簽名產生器</title>
+    <link rel="stylesheet" href="style/common.css">
+  </head>
 
-<body>
-  <div class="container">
-  
-    <h1 id="sign-title"></h1>
-  
-    <canvas id="signatureCanvas" class="canvas" width="600" height="180"></canvas><br>
+  <body>
+    <div class="container">
+    
+      <h1 id="sign-title"></h1>
+    
+      <canvas id="sign-signPad" class="canvas"></canvas>
 
-    <button id="sign-clear-btn" class="button" data-color="#d82424" onclick="clearCanvas()">清除</button>
-    <button id="sign-save-btn"  class="button" onclick="downloadSignature()">下載</button>
-  
-  </div>
+      <button id="sign-clear-btn" class="button" data-color="#d82424" onclick="clearCanvas()"></button>
+      <button id="sign-undo-btn"  class="button" data-color="#d82424" onclick="undo()"></button>
 
-  <script>
-    const canvas = document.getElementById('signatureCanvas');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
+      <button id="sign-save-btn"  class="button" onclick="downloadSignature()"></button>
+    
+    </div>
 
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000';
+    <script>
+      const canvas = document.getElementById('sign-signPad');
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
 
-    canvas.addEventListener('mousedown', e => {
-      drawing = true;
-      ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    });
+      canvas.width = 600;
+      canvas.height = 180;
 
-    canvas.addEventListener('mousemove', e => {
-      if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+
+      canvas.addEventListener('mousedown', e => {
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+      });
+
+      canvas.addEventListener('mousemove', e => {
+        if (drawing) {
+          ctx.lineTo(e.offsetX, e.offsetY);
+          ctx.stroke();
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (drawing) {
+          drawing = false;
+          saveState();
+        }
+      });
+
+      canvas.addEventListener('mouseleave', () => {
+        if (drawing) {
+          drawing = false;
+          ctx.closePath();
+          saveState();
+        }
+      });
+
+      canvas.addEventListener('touchstart', e => {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        ctx.beginPath();
+        ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        drawing = true;
+      });
+
+      canvas.addEventListener('touchmove', e => {
+        e.preventDefault();
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
         ctx.stroke();
+      });
+
+      window.addEventListener('touchend', () => {
+        if (isDrawing) {
+          drawing = false;
+          saveState();
+        }
+      });
+
+      //清除
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-    });
 
-    canvas.addEventListener('mouseup', () => drawing = false);
-    canvas.addEventListener('mouseleave', () => drawing = false);
+      //上一步
+      const history = [];
+      function saveState() {
+        history.push(canvas.toDataURL());
+        if (history.length > 10) history.shift();  // 限制堆疊大小
+      }
 
-    canvas.addEventListener('touchstart', e => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches[0];
-      ctx.beginPath();
-      ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-      drawing = true;
-    });
+      function undo() {
+        if (history.length === 0) return;      // 沒東西可復原
+        history.pop();                         // 把目前這一步丟掉
+        const last = history[history.length - 1];
+          if (!last) {                           // 沒有任何快照 → 直接清空
+          clearCanvas();
+          return;
+        }
 
-    canvas.addEventListener('touchmove', e => {
-      e.preventDefault();
-      if (!drawing) return;
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches[0];
-      ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-      ctx.stroke();
-    });
+        // 把上一個快照畫回來
+        const img = new Image();
+        img.onload = () => {
+          clearCanvas();                       // 先清空
+          ctx.drawImage(img, 0, 0);            // 再貼回來
+        };
+        img.src = last;
+      }
 
-    canvas.addEventListener('touchend', () => drawing = false);
+      //下載
+      function downloadSignature() {
+        const link = document.createElement('a');
+        link.download = 'signature.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }
 
-    //清除
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    </script>
 
-    //下載
-    function downloadSignature() {
-      const link = document.createElement('a');
-      link.download = 'signature.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
+    <script src="js/common.js"></script>
 
-  </script>
-
-  <script src="js/common.js"></script>
-
-</body>
+  </body>
 
 </html>
