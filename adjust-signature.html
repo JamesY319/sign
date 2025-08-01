@@ -87,7 +87,7 @@
         signatureImage.src = signatureDataURL;
       }
 
-      // 拖曳功能
+      // 電腦拖曳功能
       let isDragging = false;
       let dragStartX, dragStartY;
       let startLeft, startTop;
@@ -117,12 +117,40 @@
         signatureWrapper.style.top = newTop + 'px';
       });
 
+      //手機拖曳功能
       window.addEventListener('mouseup', () => {
         isDragging = false;
         isResizing = false;
       });
 
-      // 縮放功能
+      signatureWrapper.addEventListener('touchstart', (e) => {
+        if (e.target === resizeHandle) return;
+        isDragging = true;
+        const touch = e.touches[0];
+        dragStartX = touch.clientX;
+        dragStartY = touch.clientY;
+        startLeft = signatureWrapper.offsetLeft;
+        startTop = signatureWrapper.offsetTop;
+        e.preventDefault();
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - dragStartX;
+        const dy = touch.clientY - dragStartY;
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+
+        newLeft = Math.max(0, Math.min(newLeft, canvasWrapper.clientWidth - signatureWrapper.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, canvasWrapper.clientHeight - signatureWrapper.offsetHeight));
+
+        signatureWrapper.style.left = newLeft + 'px';
+        signatureWrapper.style.top = newTop + 'px';
+      });
+
+
+      // 電腦縮放功能
       let isResizing = false;
       let resizeStartX, resizeStartY;
       let startWidth, startHeight;
@@ -155,6 +183,32 @@
 
       window.addEventListener('mouseup', () => {
         isResizing = false;
+      });
+
+      //手機縮放功能
+      resizeHandle.addEventListener('touchstart', (e) => {
+        isResizing = true;
+        const touch = e.touches[0];
+        resizeStartX = touch.clientX;
+        resizeStartY = touch.clientY;
+        startWidth = signatureWrapper.offsetWidth;
+        startHeight = signatureWrapper.offsetHeight;
+        e.preventDefault();
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isResizing) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - resizeStartX;
+        const aspectRatio = startWidth / startHeight;
+        let newWidth = Math.max(50, startWidth + dx);
+        let newHeight = newWidth / aspectRatio;
+
+        newWidth = Math.min(newWidth, canvasWrapper.clientWidth - signatureWrapper.offsetLeft);
+        newHeight = Math.min(newHeight, canvasWrapper.clientHeight - signatureWrapper.offsetTop);
+
+        signatureWrapper.style.width = newWidth + 'px';
+        signatureWrapper.style.height = newHeight + 'px';
       });
 
       // 匯出合併圖片

@@ -27,8 +27,8 @@ body, html {
 /* 物件排列 橫向*/
 .container-horizontal {
   display: flex;       
-  gap: 1%;  
-  width: 100%;
+  gap: 5%;  
+  width: 65%;
   max-width: 600px;        
 }
 
