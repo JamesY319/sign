@@ -1,34 +1,34 @@
 export const translations = {
   zh: {
     "index-title": "請選擇功能",
-    "index-sign-btn": "簽名並下載透明圖",
-    "index-jpg-btn": "上傳圖片並加入簽名",
+    "index-sign-btn": "製作電子簽名",
+    "index-jpg-btn": "圖片上簽名",
 
-    "sign-title":"請簽名",
+    "sign-title":"製作電子簽名",
     "sign-save-btn":"下載",
 
     "jpg-title":"上傳圖片並簽名",
-    "jpg-upload":"上傳圖片",
-    "jpg-next":"完成，前往調整簽名",
+    "img-upload-btn":"上傳圖片",
+    "jpg-next":"前往調整位置與大小",
 
-    "jpg-adjust-title":"調整簽名位置與大小",
+    "jpg-adjust-title":"調整位置與大小",
     "jpg-adjust-save":"下載",
 
     "clear-btn":"清除",
-    "undo-btn":"上一步"
+    "undo-btn":"復原"
     
   },
   en: {
     "index-title": "Choose a Function",
     "index-sign-btn": "Create Signature",
-    "index-jpg-btn": "Upload JPG and Sign",
+    "index-jpg-btn": "Upload Image and Sign",
 
-    "sign-title":"Please Sign",
+    "sign-title":"Create Signature",
     "sign-save-btn":"Download",
 
     "jpg-title": "Upload Image and Sign",
-    "jpg-upload": "Upload Image",
-    "jpg-next": "Done, Adjust Signature",
+    "img-upload-btn": "Upload Image",
+    "jpg-next": "Adjust Position and Size",
 
     "jpg-adjust-title": "Position and Size",
     "jpg-adjust-save": "Download",

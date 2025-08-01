@@ -44,9 +44,9 @@ select {
   --btn-color: #4CAF50; /* 預設綠色 */
   display: block;
   width: 100%;
-  max-width: 400px;
-  margin: 1.2em auto;
-  padding: 1.2em;
+  max-width: 600px;
+  margin: 1.2em auto; 
+  padding: 1.2em;     
   font-size: 1.2em;
   background-color: var(--btn-color);
   color: white;
@@ -60,6 +60,17 @@ select {
   background-color: var(--btn-color);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.8);
   transform: scale(1.02);
+}
+
+/* 上傳按鈕 */
+.label {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
 }
 
 /* 畫布 */
