@@ -11,7 +11,7 @@ body, html {
   padding: 0;
 }
 
-/* 物件排列 */
+/* 物件排列 直向 */
 .container {
   display: flex;
   flex-direction: column;
@@ -23,6 +23,15 @@ body, html {
   margin: auto;
   padding: 1rem;
 }
+
+/* 物件排列 橫向*/
+.container-horizontal {
+  display: flex;       
+  gap: 1%;  
+  width: 100%;
+  max-width: 600px;        
+}
+
 
 /* 下拉表 */
 select {

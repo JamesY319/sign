@@ -14,63 +14,23 @@
 
       <input type="file" id="jpg-upload" accept="image/png, image/jpeg" />
 
-      <canvas id="signatureCanvas" class="canvas" width="600" height="180"></canvas>
-      
-      <button id="jpg-clear"class="button" data-color="#d82424"></button>
-      <button id="jpg-next" class="button" disabled></button>
+      <canvas id="signature-Pad" class="canvas"></canvas>
 
+      <div class="container-horizontal">
+        <button id="clear-btn" class="button" data-color="#d82424"></button>
+        <button id="undo-btn"  class="button"  data-color="#d82424"></button>
+      </div>
+
+      <button id="jpg-next" class="button" disabled></button>
 
     </div>
 
     <script>
-      const imageLoader = document.getElementById('jpg-upload');
-      const canvas = document.getElementById('signatureCanvas');
-      const ctx = canvas.getContext('2d');
-      const next = document.getElementById('jpg-next');
-      const clear = document.getElementById('jpg-clear');
-
-      let drawing = false;
-
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
-
-      canvas.addEventListener('mousedown', e => {
-        drawing = true;
-        ctx.beginPath();
-        ctx.moveTo(e.offsetX, e.offsetY);
-      });
-
-      canvas.addEventListener('mousemove', e => {
-        if (drawing) {
-          ctx.lineTo(e.offsetX, e.offsetY);
-          ctx.stroke();
-        }
-      });
-
-      canvas.addEventListener('mouseup', () => drawing = false);
-      canvas.addEventListener('mouseleave', () => drawing = false);
-
-      canvas.addEventListener('touchstart', e => {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        ctx.beginPath();
-        ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-        drawing = true;
-      });
-
-      canvas.addEventListener('touchmove', e => {
-        e.preventDefault();
-        if (!drawing) return;
-        const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-        ctx.stroke();
-      });
-      canvas.addEventListener('touchend', () => drawing = false);
-      
       //上傳圖片
+      const imageLoader = document.getElementById('jpg-upload');
+      const next = document.getElementById('jpg-next');
+      const canvas = document.getElementById('signature-Pad');
+
       imageLoader.addEventListener('change', e => {
         const file = e.target.files[0];
         if (!file) return;
@@ -82,22 +42,15 @@
         reader.readAsDataURL(file);
       });
 
-      //清除
-      function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-      clear.addEventListener('click', () => {
-        clearCanvas();
-      });
-
       //下一頁
-      next.addEventListener('click', () => {
-        sessionStorage.setItem('signatureData', canvas.toDataURL('image/png'));
+      document.getElementById("jpg-next").addEventListener('click', () => {
+        sessionStorage.setItem('signature', canvas.toDataURL('image/png'));
         window.location.href = 'adjust-signature.html';
       });
     </script>
 
     <script src="js/common.js"></script>
+    <script type="module" src="js/main.js"></script>
 
   </body>
 
