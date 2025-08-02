@@ -44,7 +44,7 @@ select {
   --btn-color: #4CAF50; /* 預設綠色 */
   display: block;
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   margin: 1.2em auto; 
   padding: 1.2em;     
   font-size: 1.2em;
