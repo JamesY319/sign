@@ -82,4 +82,3 @@ if (drawing) {
 });
 
 
-console.log(document.getElementById("index-title"));

@@ -66,11 +66,16 @@ select {
 .label {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: var(--lab-color);
   color: white;
   border-radius: 4px;
   cursor: pointer;
   text-align: center;
+}
+.label:hover {
+  background-color: var(--lab-color);
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.8);
 }
 
 /* 畫布 */

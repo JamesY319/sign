@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>上傳圖片並簽名</title>
-    <link rel="stylesheet" href="style/common.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>上傳圖片並簽名</title>
+  <link rel="stylesheet" href="style/common.css">
   </head>
 
   <body>
@@ -12,7 +12,7 @@
       
       <h1 id="jpg-title"></h1>
 
-      <label for="jpg-upload" id="img-upload-btn" class="label"></label>
+      <label for="jpg-upload" id="img-upload-btn" class="label" data-color="#007bff" data-i18n-key="img-upload-btn" data-i18n-state="default"></label>
       <input type="file" id="jpg-upload" accept="image/png, image/jpeg" style="display: none;"/>
 
       <canvas id="signature-Pad" class="canvas"></canvas>
@@ -48,6 +48,7 @@
         sessionStorage.setItem('signature', canvas.toDataURL('image/png'));
         window.location.href = 'adjust-signature.html';
       });
+
     </script>
 
     <script src="js/common.js"></script>
