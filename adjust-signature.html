@@ -122,7 +122,7 @@
       });
 
       //手機拖曳功能
-      window.addEventListener('touchstart', (e) => {
+      signatureWrapper.addEventListener('touchstart', (e) => {
         if (e.target === resizeHandle) return;
         isDragging = true;
         const touch = e.touches[0];
@@ -133,7 +133,7 @@
         e.preventDefault();
       });
 
-      canvasWrapper.addEventListener('touchmove', (e) => {
+      window.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
         const touch = e.touches[0];
         const dx = touch.clientX - dragStartX;
