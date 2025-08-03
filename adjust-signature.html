@@ -117,13 +117,12 @@
         signatureWrapper.style.top = newTop + 'px';
       });
 
-      //手機拖曳功能
       window.addEventListener('mouseup', () => {
         isDragging = false;
-        isResizing = false;
       });
 
-      signatureWrapper.addEventListener('touchstart', (e) => {
+      //手機拖曳功能
+      window.addEventListener('touchstart', (e) => {
         if (e.target === resizeHandle) return;
         isDragging = true;
         const touch = e.touches[0];
@@ -134,7 +133,7 @@
         e.preventDefault();
       });
 
-      window.addEventListener('touchmove', (e) => {
+      canvasWrapper.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
         const touch = e.touches[0];
         const dx = touch.clientX - dragStartX;
@@ -147,6 +146,10 @@
 
         signatureWrapper.style.left = newLeft + 'px';
         signatureWrapper.style.top = newTop + 'px';
+      });
+
+      window.addEventListener('touchend', () => {
+        isDragging = false;
       });
 
 
@@ -209,6 +212,10 @@
 
         signatureWrapper.style.width = newWidth + 'px';
         signatureWrapper.style.height = newHeight + 'px';
+      });
+
+      window.addEventListener('touchend', () => {
+        isResizing = false;
       });
 
       // 匯出合併圖片
