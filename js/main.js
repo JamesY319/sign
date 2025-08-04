@@ -26,12 +26,16 @@ context.lineWidth = 2;
 context.lineCap = 'round';
 context.strokeStyle = '#000';
 
+canvas.addEventListener("dragstart", function (e) {
+  e.preventDefault(); // 阻止預設拖曳行為
+});
+
 let drawing = false;
 
 canvas.addEventListener('mousedown', e => {
-drawing = true;
-context.beginPath();
-context.moveTo(e.offsetX, e.offsetY);
+  drawing = true;
+  context.beginPath();
+  context.moveTo(e.offsetX, e.offsetY);
 });
 
 canvas.addEventListener('mousemove', e => {
@@ -57,21 +61,21 @@ if (drawing) {
 });
 
 canvas.addEventListener('touchstart', e => {
-e.preventDefault();
-const rect = canvas.getBoundingClientRect();
-const touch = e.touches[0];
-context.beginPath();
-context.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-drawing = true;
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  context.beginPath();
+  context.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+  drawing = true;
 });
 
 canvas.addEventListener('touchmove', e => {
-e.preventDefault();
-if (!drawing) return;
-const rect = canvas.getBoundingClientRect();
-const touch = e.touches[0];
-context.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-context.stroke();
+  e.preventDefault();
+  if (!drawing) return;
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  context.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+  context.stroke();
 });
 
 window.addEventListener('touchend', () => {

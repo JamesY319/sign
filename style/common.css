@@ -87,6 +87,11 @@ select {
   touch-action: none; 
 }
 
+/* 隱藏 */
+.hidden {
+  display: none;
+}
+
 /* 手機優化 */
 @media (max-width: 600px) {
   .button {
